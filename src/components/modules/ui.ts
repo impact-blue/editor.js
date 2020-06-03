@@ -91,11 +91,12 @@ export default class UI extends Module {
   /**
    * HTML Elements used for UI
    */
-  public nodes: { [key: string]: HTMLElement } = {
+  public nodes: { [key: string]: HTMLElement | SVGElement } = {
     holder: null,
     wrapper: null,
     redactor: null,
     footer: null,
+    newBlockIcon: null,
   };
 
   /**
@@ -265,15 +266,8 @@ export default class UI extends Module {
     /**
      * Make new block button in footer
      */
-    const newBlockIcon = $.svg('plus', 24, 24);
-
-    this.Editor.Listeners.on(
-      newBlockIcon,
-      'click',
-      () => this.Editor.BlockManager.insertAtEnd(),
-      false,
-    );
-    this.nodes.footer.appendChild(newBlockIcon);
+    this.nodes.newBlockIcon = $.svg('plus', 24, 24);
+    this.nodes.footer.appendChild(this.nodes.newBlockIcon);
 
     this.nodes.wrapper.appendChild(this.nodes.redactor);
     this.nodes.wrapper.appendChild(this.nodes.footer);
@@ -321,6 +315,16 @@ export default class UI extends Module {
       'touchstart',
       (event) => this.documentTouched(event as MouseEvent),
       true,
+    );
+
+    this.Editor.Listeners.on(
+      this.nodes.newBlockIcon,
+      'click',
+      () => {
+        this.Editor.BlockManager.insertAtEnd();
+        this.Editor.Caret.setToTheLastBlock();
+      },
+      false,
     );
 
     this.Editor.Listeners.on(document, 'keydown', (event) => this.documentKeydown(event as KeyboardEvent), true);
