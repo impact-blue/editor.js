@@ -42,7 +42,7 @@ export default class UI extends Module {
    */
   public get CSS(): {
     editorWrapper: string, editorWrapperNarrow: string, editorZone: string, editorZoneHidden: string,
-    editorLoader: string, editorEmpty: string,
+    editorLoader: string, editorEmpty: string, footer: string,
   } {
     return {
       editorWrapper    : 'codex-editor',
@@ -51,6 +51,7 @@ export default class UI extends Module {
       editorZoneHidden : 'codex-editor__redactor--hidden',
       editorLoader     : 'codex-editor__loader',
       editorEmpty      : 'codex-editor--empty',
+      footer           : 'codex-editor__footer',
     };
   }
 
@@ -94,6 +95,7 @@ export default class UI extends Module {
     holder: null,
     wrapper: null,
     redactor: null,
+    footer: null,
   };
 
   /**
@@ -246,6 +248,7 @@ export default class UI extends Module {
      */
     this.nodes.wrapper  = $.make('div', this.CSS.editorWrapper);
     this.nodes.redactor = $.make('div', this.CSS.editorZone);
+    this.nodes.footer = $.make('div', this.CSS.footer);
 
     /**
      * If Editor has injected into the narrow container, enable Narrow Mode
@@ -259,9 +262,22 @@ export default class UI extends Module {
      */
     this.nodes.redactor.style.paddingBottom = this.config.minHeight + 'px';
 
-    this.nodes.wrapper.appendChild(this.nodes.redactor);
-    this.nodes.holder.appendChild(this.nodes.wrapper);
+    /**
+     * Make new block button in footer
+     */
+    const newBlockIcon = $.svg('plus', 24, 24);
 
+    this.Editor.Listeners.on(
+      newBlockIcon,
+      'click',
+      () => this.Editor.BlockManager.insertAtEnd(),
+      false,
+    );
+    this.nodes.footer.appendChild(newBlockIcon);
+
+    this.nodes.wrapper.appendChild(this.nodes.redactor);
+    this.nodes.wrapper.appendChild(this.nodes.footer);
+    this.nodes.holder.appendChild(this.nodes.wrapper);
   }
 
   /**

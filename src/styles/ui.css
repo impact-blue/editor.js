@@ -61,6 +61,14 @@
     }
   }
 
+  &__footer {
+    text-align: center;
+
+    svg {
+      cursor: pointer;
+    }
+  }
+
   &-copyable {
     position: absolute;
     height: 1px;
