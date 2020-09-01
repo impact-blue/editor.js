@@ -52,6 +52,11 @@ export default class Caret extends Module {
     const firstNode = $.getDeepestNode(this.Editor.BlockManager.currentBlock.currentInput);
     let focusNode = selection.focusNode;
 
+    /** Prevent error when press enter on <input> element */
+    if (!firstNode) {
+      return false;
+    }
+
     /** In case lastNode is native input */
     if ($.isNativeInput(firstNode)) {
       return (firstNode as HTMLInputElement).selectionEnd === 0;
