@@ -547,7 +547,6 @@ export default class InlineToolbar extends Module {
     Listeners.on(button, 'click', (event) => {
       this.toolClicked(tool);
       event.preventDefault();
-      event.stopPropagation();
     });
 
     /**
@@ -645,7 +644,6 @@ export default class InlineToolbar extends Module {
         }
 
         event.preventDefault();
-        event.stopPropagation();
         this.toolClicked(tool);
       },
     });
