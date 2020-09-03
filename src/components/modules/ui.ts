@@ -716,7 +716,7 @@ export default class UI extends Module {
     if (
       !focusedElement
       || !focusedElement.closest(`.${this.CSS.editorWrapper}`).isEqualNode(this.nodes.wrapper)
-      || !focusedElement.closest(`.${Block.CSS.content}`)
+      || !this.nodes.wrapper.contains(focusedElement.closest(`.${Block.CSS.content}`))
     ) {
       /**
        * If new selection is not on Inline Toolbar, we need to close it
