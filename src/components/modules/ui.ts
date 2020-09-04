@@ -44,7 +44,7 @@ export default class UI extends Module {
   public get CSS(): {
     editorWrapper: string; editorWrapperNarrow: string; editorZone: string; editorZoneHidden: string;
     editorLoader: string; editorEmpty: string;
-    } {
+  } {
     return {
       editorWrapper: 'codex-editor',
       editorWrapperNarrow: 'codex-editor--narrow',
@@ -713,7 +713,11 @@ export default class UI extends Module {
      * Event can be fired on clicks at the Editor elements, for example, at the Inline Toolbar
      * We need to skip such firings
      */
-    if (!focusedElement || !focusedElement.closest(`.${Block.CSS.content}`)) {
+    if (
+      !focusedElement
+      || !focusedElement.closest(`.${this.CSS.editorWrapper}`).isEqualNode(this.nodes.wrapper)
+      || !this.nodes.wrapper.contains(focusedElement.closest(`.${Block.CSS.content}`))
+    ) {
       /**
        * If new selection is not on Inline Toolbar, we need to close it
        */
