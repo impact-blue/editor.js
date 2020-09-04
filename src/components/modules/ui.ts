@@ -44,7 +44,7 @@ export default class UI extends Module {
   public get CSS(): {
     editorWrapper: string; editorWrapperNarrow: string; editorZone: string; editorZoneHidden: string;
     editorLoader: string; editorEmpty: string;
-  } {
+    } {
     return {
       editorWrapper: 'codex-editor',
       editorWrapperNarrow: 'codex-editor--narrow',
@@ -714,21 +714,21 @@ export default class UI extends Module {
      * We need to skip such firings
      */
     if (
-      !focusedElement
-      || !focusedElement.closest(`.${this.CSS.editorWrapper}`).isEqualNode(this.nodes.wrapper)
-      || !this.nodes.wrapper.contains(focusedElement.closest(`.${Block.CSS.content}`))
+      focusedElement &&
+      focusedElement.closest(`.${this.CSS.editorWrapper}`)?.isEqualNode(this.nodes.wrapper) &&
+      this.nodes.wrapper.contains(focusedElement.closest(`.${Block.CSS.content}`))
     ) {
-      /**
-       * If new selection is not on Inline Toolbar, we need to close it
-       */
-      if (!this.Editor.InlineToolbar.containsNode(focusedElement)) {
-        this.Editor.InlineToolbar.close();
-      }
+      this.Editor.InlineToolbar.tryToShow(true);
 
       return;
     }
 
-    this.Editor.InlineToolbar.tryToShow(true);
+    /**
+     * If new selection is not on Inline Toolbar, we need to close it
+     */
+    if (!this.Editor.InlineToolbar.containsNode(focusedElement)) {
+      this.Editor.InlineToolbar.close();
+    }
   }
 
   /**
