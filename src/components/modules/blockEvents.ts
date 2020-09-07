@@ -19,9 +19,9 @@ export default class BlockEvents extends Module {
     /**
      * Check the event was dispatched in first-level node
      */
-    if (!(event.target as Element)
-      .closest(`.${this.Editor.UI.CSS.editorWrapper}`)
-      .isEqualNode(this.Editor.UI.nodes.wrapper)) {
+    const editorWrapper = (event.target as Element).closest(`.${this.Editor.UI.CSS.editorWrapper}`);
+
+    if (!editorWrapper?.isEqualNode(this.Editor.UI.nodes.wrapper)) {
       return;
     }
 
