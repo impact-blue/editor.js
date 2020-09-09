@@ -262,6 +262,15 @@ export default class Toolbox extends Module {
     this.Editor.Shortcuts.add({
       name: shortcut,
       handler: (event: KeyboardEvent) => {
+        const { currentBlock } = this.Editor.BlockManager;
+
+        /**
+         * Editor is not focused
+         */
+        if (!currentBlock) {
+          return;
+        }
+
         event.preventDefault();
         this.insertNewBlock(tool, toolName);
       },

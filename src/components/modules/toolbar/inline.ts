@@ -622,11 +622,12 @@ export default class InlineToolbar extends Module {
       name: shortcut,
       handler: (event) => {
         const { currentBlock } = this.Editor.BlockManager;
+        const focusedElement = SelectionUtils.anchorElement;
 
         /**
          * Editor is not focused
          */
-        if (!currentBlock) {
+        if (!currentBlock || !focusedElement || !this.containsNode(focusedElement)) {
           return;
         }
 
