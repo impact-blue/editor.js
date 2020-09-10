@@ -707,7 +707,7 @@ export default class UI extends Module {
    * @param {Event} event - selection event
    */
   private selectionChanged(event: Event): void {
-    const focusedElement = Selection.anchorElement as Element;
+    const focusedElement = Selection.anchorElement;
 
     /**
      * Event can be fired on clicks at the Editor elements, for example, at the Inline Toolbar
@@ -723,12 +723,14 @@ export default class UI extends Module {
       return;
     }
 
+    if (focusedElement && this.Editor.InlineToolbar.containsNode(focusedElement)) {
+      return;
+    }
+
     /**
      * If new selection is not on Inline Toolbar, we need to close it
      */
-    if (!this.Editor.InlineToolbar.containsNode(focusedElement)) {
-      this.Editor.InlineToolbar.close();
-    }
+    this.Editor.InlineToolbar.close();
   }
 
   /**
