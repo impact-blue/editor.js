@@ -259,10 +259,13 @@ export default class BlockEvents extends Module {
 
     let newCurrent = this.Editor.BlockManager.currentBlock;
 
-    /**
-     * If enter has been pressed at the start of the text, just insert paragraph Block above
-     */
-    if (this.Editor.Caret.isAtStart && !this.Editor.BlockManager.currentBlock.hasMedia) {
+    if (document.activeElement.closest('.cdx-input')){
+      /** If target is cdx-input, just insert paragraph Block below */
+      newCurrent = this.Editor.BlockManager.insertInitialBlockAtIndex(this.Editor.BlockManager.currentBlockIndex + 1, true);
+    }else if (this.Editor.Caret.isAtStart && !this.Editor.BlockManager.currentBlock.hasMedia) {
+      /**
+       * If enter has been pressed at the start of the text, just insert paragraph Block above
+       */
       this.Editor.BlockManager.insertInitialBlockAtIndex(this.Editor.BlockManager.currentBlockIndex);
     } else {
       /**
@@ -298,6 +301,11 @@ export default class BlockEvents extends Module {
    * @param {KeyboardEvent} event - keydown
    */
   private backspace(event: KeyboardEvent): void {
+    /** If target is cdx-input, use browser behaviour */
+    if (document.activeElement.closest('.cdx-input')) {
+      return ;
+    }
+
     const { BlockManager, BlockSelection, Caret } = this.Editor;
     const currentBlock = BlockManager.currentBlock;
     const tool = this.Editor.Tools.available[currentBlock.name];
