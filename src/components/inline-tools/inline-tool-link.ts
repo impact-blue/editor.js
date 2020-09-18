@@ -282,7 +282,7 @@ export default class LinkInlineTool implements InlineTool {
   /**
    * Changed event hander
    */
-  private changed = () => {
+  private changed = (): void => {
     let value = this.nodes.input.value || '';
 
     if (!value.trim()) {

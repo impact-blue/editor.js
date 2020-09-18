@@ -428,9 +428,9 @@ export default class Paste extends Module {
 
     /** If target is cdx-input, paste as plain text */
     if (event.target instanceof Element && event.target.closest('.cdx-input')) {
-      const plainTextData = event.clipboardData.getData("text/plain");
+      const plainTextData = event.clipboardData.getData('text/plain');
 
-      document.execCommand("insertText", false, plainTextData);
+      document.execCommand('insertText', false, plainTextData);
       event.preventDefault();
 
       return;

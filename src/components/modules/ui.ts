@@ -324,7 +324,9 @@ export default class UI extends Module {
     );
     this.Editor.Listeners.on(this.nodes.redactor,
       'focusout',
-      () => blurTimeoutID = setTimeout(() => this.config.onBlur(this.Editor.API.methods)),
+      () => {
+        blurTimeoutID = setTimeout(() => this.config.onBlur(this.Editor.API.methods));
+      },
       false
     );
 
