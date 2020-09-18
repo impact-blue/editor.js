@@ -351,6 +351,13 @@ export default class InlineToolbar extends Module {
       return false;
     }
 
+    // The selection of the element is not .cdx-no-inline
+    const noInline = target.closest('.cdx-no-inline');
+
+    if (noInline) {
+      return false;
+    }
+
     // is enabled by current Block's Tool
     const currentBlock = this.Editor.BlockManager.getBlock(currentSelection.anchorNode as HTMLElement);
 
