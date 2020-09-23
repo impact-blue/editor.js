@@ -40,7 +40,7 @@ export default class DeleteTune implements BlockTune {
   /**
    * Tune nodes
    */
-  private nodes: {button: HTMLElement} = {
+  private nodes: { button: HTMLElement } = {
     button: null,
   };
 
@@ -81,34 +81,14 @@ export default class DeleteTune implements BlockTune {
    * @param {MouseEvent} event - click event
    */
   public handleClick(event: MouseEvent): void {
+    this.api.blocks.delete();
+    this.api.toolbar.close();
+    this.api.tooltip.hide();
+
     /**
-     * if block is not waiting the confirmation, subscribe on block-settings-closing event to reset
-     * otherwise delete block
+     * Prevent firing ui~documentClicked that can drop currentBlock pointer
      */
-    if (!this.needConfirmation) {
-      this.setConfirmation(true);
-
-      /**
-       * Subscribe on event.
-       * When toolbar block settings is closed but block deletion is not confirmed,
-       * then reset confirmation state
-       */
-      this.api.events.on('block-settings-closed', this.resetConfirmation);
-    } else {
-      /**
-       * Unsubscribe from block-settings closing event
-       */
-      this.api.events.off('block-settings-closed', this.resetConfirmation);
-
-      this.api.blocks.delete();
-      this.api.toolbar.close();
-      this.api.tooltip.hide();
-
-      /**
-       * Prevent firing ui~documentClicked that can drop currentBlock pointer
-       */
-      event.stopPropagation();
-    }
+    event.stopPropagation();
   }
 
   /**
