@@ -14,13 +14,14 @@ export default class SizeObserver extends Module {
   /**
    * ResizeObserver instance
    */
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
   // @ts-ignore
   private observer: ResizeObserver;
 
   /**
    * Disconnect ResizeObserver
    */
-  public destroy() {
+  public destroy(): void {
     if (this.observer) {
       this.observer.disconnect();
     }
@@ -40,6 +41,7 @@ export default class SizeObserver extends Module {
 
     const { UI } = this.Editor;
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     this.observer = new ResizeObserver(() => {
       this.resizeHandler();
@@ -50,7 +52,7 @@ export default class SizeObserver extends Module {
   /**
    * ResizeObserver events handler
    */
-  private resizeHandler() {
+  private resizeHandler(): void {
     /**
      * Wait till Browser render Editor's Blocks
      */

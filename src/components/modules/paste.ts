@@ -419,10 +419,27 @@ export default class Paste extends Module {
   private handlePasteEvent = async (event: ClipboardEvent): Promise<void> => {
     const { BlockManager, Toolbar } = this.Editor;
 
+    if (
+      !(event.target instanceof Element) ||
+      !event.target.closest(`.${this.Editor.UI.CSS.editorWrapper}`)?.isEqualNode(this.Editor.UI.nodes.wrapper)
+    ) {
+      return;
+    }
+
     /** If target is native input or is not Block, use browser behaviour */
     if (
       !BlockManager.currentBlock || (this.isNativeBehaviour(event.target) && !event.clipboardData.types.includes('Files'))
     ) {
+      return;
+    }
+
+    /** If target is cdx-input, paste as plain text */
+    if (event.target instanceof Element && event.target.closest('.cdx-input')) {
+      const plainTextData = event.clipboardData.getData('text/plain');
+
+      document.execCommand('insertText', false, plainTextData);
+      event.preventDefault();
+
       return;
     }
 

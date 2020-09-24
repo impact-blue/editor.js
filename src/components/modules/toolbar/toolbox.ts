@@ -245,7 +245,7 @@ export default class Toolbox extends Module {
     const shortcut = toolSettings[this.Editor.Tools.USER_SETTINGS.SHORTCUT];
     const shortcutContainer = $.make('div');
 
-    shortcutContainer.appendChild($.text(shortcut && _.beautifyShortcut(shortcut) || '　'));
+    shortcutContainer.appendChild($.text(shortcut ? _.beautifyShortcut(shortcut) : '　'));
     label.appendChild(shortcutContainer);
 
     return label;
