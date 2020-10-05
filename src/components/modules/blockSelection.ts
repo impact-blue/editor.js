@@ -322,6 +322,11 @@ export default class BlockSelection extends Module {
     }
 
     const workingBlock = this.Editor.BlockManager.getBlock(event.target as HTMLElement);
+
+    if (!workingBlock) {
+      return;
+    }
+
     const inputs = workingBlock.inputs;
 
     /**
