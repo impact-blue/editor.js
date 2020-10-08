@@ -173,7 +173,9 @@ export default class BlockSettings extends Module {
     this.flipper.deactivate();
 
     /** Dispatch onBlur event manually */
-    this.config.onBlur(this.Editor.API.methods);
+    if (this.config.onBlur) {
+      this.config.onBlur(this.Editor.API.methods);
+    }
   }
 
   /**

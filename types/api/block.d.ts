@@ -48,6 +48,13 @@ export interface BlockAPI {
   call(methodName: string, param?: object): void;
 
   /**
+   * Clone Block content
+   *
+   * @return {Promise<void|SavedData>}
+   */
+  clone(): Promise<void|SavedData>;
+
+  /**
    * Save Block content
    *
    * @return {Promise<void|SavedData>}

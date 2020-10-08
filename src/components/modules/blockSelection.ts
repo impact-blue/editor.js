@@ -251,7 +251,7 @@ export default class BlockSelection extends Module {
       fakeClipboard.appendChild(fragment);
     });
 
-    const savedData = await Promise.all(this.selectedBlocks.map((block) => block.save()));
+    const clonedData = await Promise.all(this.selectedBlocks.map((block) => block.clone()));
 
     const textPlain = Array.from(fakeClipboard.childNodes).map((node) => node.textContent)
       .join('\n\n');
@@ -259,7 +259,7 @@ export default class BlockSelection extends Module {
 
     e.clipboardData.setData('text/plain', textPlain);
     e.clipboardData.setData('text/html', textHTML);
-    e.clipboardData.setData(this.Editor.Paste.MIME_TYPE, JSON.stringify(savedData));
+    e.clipboardData.setData(this.Editor.Paste.MIME_TYPE, JSON.stringify(clonedData));
   }
 
   /**

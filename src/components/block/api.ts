@@ -88,6 +88,15 @@ function BlockAPI(block: Block): void {
     },
 
     /**
+     * Clone Block content
+     *
+     * @returns {Promise<void|SavedData>}
+     */
+    clone(): Promise<void|SavedData> {
+      return block.clone();
+    },
+
+    /**
      * Save Block content
      *
      * @returns {Promise<void|SavedData>}
